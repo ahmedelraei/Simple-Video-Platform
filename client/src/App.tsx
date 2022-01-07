@@ -18,7 +18,9 @@ function App() {
           <Route
             path="/"
             element={<ProtectedRoute isAuthenticated={authenticated} />}
-          />
+          >
+            <Route path="/" element={<Home></Home>} />
+          </Route>
           <Route path="/login" element={<SignIn></SignIn>} />
         </Routes>
       </AuthContext.Provider>
