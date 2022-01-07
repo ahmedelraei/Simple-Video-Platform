@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthContext } from './helpers/auth.helpers'
+import Analytics from './components/Analytics'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(
@@ -22,6 +23,12 @@ function App() {
             <Route path="/" element={<Home></Home>} />
           </Route>
           <Route path="/login" element={<SignIn></SignIn>} />
+          <Route
+            path="/analytics"
+            element={<ProtectedRoute isAuthenticated={authenticated} />}
+          >
+            <Route path="/analytics" element={<Analytics></Analytics>} />
+          </Route>
         </Routes>
       </AuthContext.Provider>
     </BrowserRouter>

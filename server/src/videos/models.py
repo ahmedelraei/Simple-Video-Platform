@@ -12,6 +12,6 @@ class Video(models.Model):
 
     def save(self, *args, **kwargs):
         if not kwargs.pop("skip_updated_date", False):
-            self.updated_date = timezone.now
+            self.updated_date = timezone.now()
 
         super(Video, self).save(*args, **kwargs)

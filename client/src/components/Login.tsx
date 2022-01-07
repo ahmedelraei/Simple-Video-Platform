@@ -12,10 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 import { useNavigate, Navigate } from 'react-router-dom'
 import { AuthContext } from '../helpers/auth.helpers'
-
+import axiosInstance from '../axios'
 const theme = createTheme()
 
 export default function SignIn() {
@@ -27,16 +27,14 @@ export default function SignIn() {
       username: username,
       password: password,
     }
-    const promise = axios.post(
-      `http://localhost:8000/users/authenticate/`,
-      data
-    )
+    const promise = axiosInstance.post(`/users/authenticate/`, data)
 
     const dataPromise = promise.then((res: AxiosResponse) => {
       localStorage.setItem('access_token', res.data.access)
       localStorage.setItem('refresh_token', res.data.refresh)
       localStorage.setItem('user', res.data.user)
       setAuthenticated(true)
+      localStorage.setItem('authenticated', 'true')
       return res.data
     })
 

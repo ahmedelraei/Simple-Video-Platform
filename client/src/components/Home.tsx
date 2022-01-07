@@ -1,9 +1,13 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
 import './styles/Home.css'
+import axiosInstance from '../axios'
+import { AxiosResponse } from 'axios'
+import Video, { ItemType } from './Video'
 
 export default function Home() {
   const [playing, setPlaying] = useState(false)
+  const [data, setData] = useState([])
   const videoRef = useRef<HTMLVideoElement>(null)
   const onPressVideo = () => {
     if (playing) {
@@ -14,19 +18,22 @@ export default function Home() {
       setPlaying(true)
     }
   }
+  useEffect(() => {
+    axiosInstance(`/videos/`)
+      .then((res: AxiosResponse) => {
+        setData(res.data)
+      })
+      .catch((err) => console.error(err))
+  }, [])
+  console.log(data)
+
   return (
     <Grid container>
-      <Grid item xs={12}>
-        <div className="video">
-          <video
-            className="video__player"
-            loop
-            onClick={onPressVideo}
-            ref={videoRef}
-            src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"
-          ></video>
-        </div>
-      </Grid>
+      {data.map((item: ItemType) => (
+        <Grid item xs={12} key={item.id}>
+          <Video item={item} />
+        </Grid>
+      ))}
     </Grid>
   )
 }

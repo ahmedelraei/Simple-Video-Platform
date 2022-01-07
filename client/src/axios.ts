@@ -50,10 +50,9 @@ axiosInstance.interceptors.response.use(
 
         if (tokenParts.exp > now) {
           return axiosInstance
-            .post('/token/refresh/', { refresh: refreshToken })
+            .post('/users/authenticate/refresh/', { refresh: refreshToken })
             .then((response) => {
               localStorage.setItem('access_token', response.data.access)
-              localStorage.setItem('authenticated', 'true')
               ;(
                 axiosInstance.defaults.headers as unknown as Record<
                   string,
