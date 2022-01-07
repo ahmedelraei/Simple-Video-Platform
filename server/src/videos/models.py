@@ -9,9 +9,13 @@ class Video(models.Model):
     video = models.FileField()
     upload_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(default=timezone.now)
+    views = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="views")
 
     def save(self, *args, **kwargs):
         if not kwargs.pop("skip_updated_date", False):
             self.updated_date = timezone.now()
 
         super(Video, self).save(*args, **kwargs)
+
+    def get_views_count(self):
+        return self.views.count()

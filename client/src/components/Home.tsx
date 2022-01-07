@@ -4,6 +4,8 @@ import './styles/Home.css'
 import axiosInstance from '../axios'
 import { AxiosResponse } from 'axios'
 import Video, { ItemType } from './Video'
+import { ThemeProvider } from '@mui/material/styles'
+import { theme } from '../constants'
 
 export default function Home() {
   const [playing, setPlaying] = useState(false)
@@ -28,12 +30,14 @@ export default function Home() {
   console.log(data)
 
   return (
-    <Grid container>
-      {data.map((item: ItemType) => (
-        <Grid item xs={12} key={item.id}>
-          <Video item={item} />
-        </Grid>
-      ))}
-    </Grid>
+    <ThemeProvider theme={theme}>
+      <Grid container>
+        {data.map((item: ItemType) => (
+          <Grid item xs={12} key={item.id}>
+            <Video item={item} />
+          </Grid>
+        ))}
+      </Grid>
+    </ThemeProvider>
   )
 }

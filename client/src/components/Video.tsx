@@ -1,9 +1,11 @@
 import { useRef, useState, useEffect } from 'react'
+import axiosInstance from '../axios'
 import './styles/Home.css'
 
 export type ItemType = {
   id: number
   owner: string
+  views: number
   title: string
   updated_date: string
   upload_date: string
@@ -22,6 +24,9 @@ export default function Video({ item }: any) {
   }, [])
 
   const onPressVideo = () => {
+    axiosInstance
+      .post(`/videos/trigger_view/${item.id}`)
+      .catch((err) => console.error(err))
     if (playing) {
       videoRef.current && videoRef.current.pause()
       setPlaying(false)

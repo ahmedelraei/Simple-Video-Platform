@@ -11,12 +11,12 @@ import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
+import { theme } from '../constants'
 import { AxiosResponse } from 'axios'
 import { useNavigate, Navigate } from 'react-router-dom'
 import { AuthContext } from '../helpers/auth.helpers'
 import axiosInstance from '../axios'
-const theme = createTheme()
 
 export default function SignIn() {
   const navigate = useNavigate()

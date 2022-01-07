@@ -5,6 +5,7 @@ from django.conf import settings
 
 class VideoSerializer(serializers.ModelSerializer):
     owner = serializers.SerializerMethodField()
+    views = serializers.IntegerField(source="get_views_count")
 
     class Meta:
         model = Video
