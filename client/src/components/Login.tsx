@@ -15,7 +15,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { theme } from '../constants'
 import { AxiosResponse } from 'axios'
 import { useNavigate, Navigate } from 'react-router-dom'
-import { AuthContext } from '../helpers/auth.helpers'
+import { AuthContext } from '../contexts/auth.contexts'
 import axiosInstance from '../axios'
 
 export default function SignIn() {
@@ -49,7 +49,7 @@ export default function SignIn() {
     authenticate(username, password).then((_) => navigate('/'))
   }
 
-  if (authenticated) return <Navigate to="/" replace />
+  if (authenticated) return <Navigate to="/" />
 
   return (
     <ThemeProvider theme={theme}>

@@ -11,7 +11,6 @@ class VideoViewset(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
-        print(self.request.user)
         serializer.save(owner=self.request.user)
 
 
@@ -19,5 +18,4 @@ class VideoAnalyticsAPIView(APIView):
     def post(self, *args, **kwargs):
         video = Video.objects.get(pk=self.kwargs["id"])
         video.views.add(self.request.user)
-        print(video.get_views_count())
         return Response({"views": video.get_views_count()}, status=200)
