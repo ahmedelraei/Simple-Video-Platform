@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import axiosInstance from '../axios'
-import './styles/Home.css'
+import './styles/Video.css'
 
 export type ItemType = {
   id: number
@@ -11,7 +11,7 @@ export type ItemType = {
   upload_date: string
   video: string
 }
-
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export default function Video({ item }: any) {
   const [playing, setPlaying] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)

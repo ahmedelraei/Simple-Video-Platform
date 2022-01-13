@@ -1,30 +1,42 @@
 import { useState } from 'react'
 import './App.css'
-import SignIn from './components/Login'
+import SignIn from './routes/Login'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './components/Home'
+import Home from './routes/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthContext } from './contexts/auth.contexts'
-import Dashboard from './components/Dashboard'
+import Analytics from './routes/Analytics'
+import Register from './routes/Register'
+import { ThemeProvider } from '@mui/material/styles'
+import { theme } from './constants'
+import CssBaseline from '@mui/material/CssBaseline'
+import Upload from './routes/Upload'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(
     localStorage.getItem('authenticated') ? true : false
   )
   return (
-    <BrowserRouter>
-      <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
-        <Routes>
-          <Route path="/" element={<ProtectedRoute />}>
-            <Route path="/" element={<Home></Home>} />
-          </Route>
-          <Route path="/login" element={<SignIn></SignIn>} />
-          <Route path="/dashboard" element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<Dashboard></Dashboard>} />
-          </Route>
-        </Routes>
-      </AuthContext.Provider>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
+          <Routes>
+            <Route path="/" element={<ProtectedRoute />}>
+              <Route path="/" element={<Home></Home>} />
+            </Route>
+            <Route path="/login" element={<SignIn></SignIn>} />
+            <Route path="/register" element={<Register></Register>} />
+            <Route path="/dashboard" element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Analytics></Analytics>} />
+            </Route>
+            <Route path="/dashboard/upload" element={<ProtectedRoute />}>
+              <Route path="/dashboard/upload" element={<Upload></Upload>} />
+            </Route>
+          </Routes>
+        </AuthContext.Provider>
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

@@ -9,7 +9,9 @@ class Video(models.Model):
     video = models.FileField()
     upload_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(default=timezone.now)
-    views = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="views")
+    views = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="views", blank=True)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="likes", blank=True)
+    dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="dislikes", blank=True)
 
     def save(self, *args, **kwargs):
         if not kwargs.pop("skip_updated_date", False):

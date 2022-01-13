@@ -26,9 +26,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "corsheaders",
+    "rest_framework",
     "rest_framework_simplejwt",
     "users",
     "videos",
+    "django_countries",
 ]
 
 MIDDLEWARE = [
@@ -41,6 +43,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+
+AUTH_USER_MODEL = "users.User"
+
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -121,7 +127,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
 }
