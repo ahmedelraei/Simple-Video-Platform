@@ -9,9 +9,14 @@ router.register("", VideoViewset)
 
 urlpatterns = [
     path(
-        "trigger_view/<int:id>",
+        "analytics/<int:id>",
         VideoAnalyticsAPIView.as_view(),
         name="video_view_trigger",
+    ),
+    path(
+        "analytics/",
+        VideoAnalyticsAPIView.as_view(),
+        name="VideoAnalyticsAPIView",
     ),
 ]
 

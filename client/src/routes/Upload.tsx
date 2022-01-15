@@ -7,10 +7,39 @@ import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import UploadIcon from '@mui/icons-material/Upload'
+import React, { useState } from 'react'
+import axiosInstance from '../axios'
+import { useNavigate } from 'react-router-dom'
+
+type UploadState = {
+  file: File | null
+}
 
 export default function Upload() {
-  const handleSubmit = () => {
-    return 0
+  const navigate = useNavigate()
+  const [formValues, setFormValues] = useState<UploadState>({ file: null })
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
+    const title: string = data.get('title') as string
+    const formData = new FormData()
+    formData.append('title', title)
+    formValues.file && formData.append('video', formValues.file)
+    console.log(formData)
+    axiosInstance
+      .post(`/videos/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        navigate('/dashboard')
+      })
+  }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues(() => ({
+      file: event.target.files ? event.target.files[0] : null,
+    }))
   }
   return (
     <Dashboard>
@@ -24,6 +53,8 @@ export default function Upload() {
           }}
         >
           <Box
+            component="form"
+            onSubmit={handleSubmit}
             sx={{
               marginTop: 8,
               display: 'flex',
@@ -37,12 +68,7 @@ export default function Upload() {
             <Typography component="h1" variant="h5">
               Upload a video
             </Typography>
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{ mt: 1 }}
-            >
+            <Box sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -53,17 +79,19 @@ export default function Upload() {
                 autoComplete="title"
                 autoFocus
               />
-              <Typography component="p" sx={{ mt: 3, mb: 2 }}>
-                Upload a video
-              </Typography>
+              <input
+                accept="video/*"
+                onChange={(e) => handleChange(e)}
+                multiple
+                type="file"
+              />
               <Button
+                type="submit"
                 fullWidth
                 variant="contained"
-                component="label"
                 sx={{ mt: 3, mb: 2 }}
               >
                 Upload
-                <input type="file" hidden />
               </Button>
             </Box>
           </Box>

@@ -25,7 +25,7 @@ export default function Video({ item }: any) {
 
   const onPressVideo = () => {
     axiosInstance
-      .post(`/videos/trigger_view/${item.id}`)
+      .post(`/videos/analytics/${item.id}`)
       .catch((err) => console.error(err))
     if (playing) {
       videoRef.current && videoRef.current.pause()

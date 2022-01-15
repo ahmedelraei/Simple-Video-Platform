@@ -5,18 +5,8 @@ import { AxiosResponse } from 'axios'
 import Video, { ItemType } from '../components/Video'
 
 export default function Home() {
-  const [playing, setPlaying] = useState(false)
   const [data, setData] = useState([])
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const onPressVideo = () => {
-    if (playing) {
-      videoRef.current && videoRef.current.pause()
-      setPlaying(false)
-    } else {
-      videoRef.current && videoRef.current.play()
-      setPlaying(true)
-    }
-  }
+
   useEffect(() => {
     axiosInstance(`/videos/`)
       .then((res: AxiosResponse) => {
@@ -24,7 +14,6 @@ export default function Home() {
       })
       .catch((err) => console.error(err))
   }, [])
-  console.log(data)
 
   return (
     <Grid container>
