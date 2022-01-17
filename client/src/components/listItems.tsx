@@ -21,7 +21,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Upload video" />
     </ListItem>
-    <ListItem button component={Link} to="/dashboard">
+    <ListItem button component={Link} to="/dashboard/videos">
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>

@@ -11,6 +11,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { theme } from './constants'
 import CssBaseline from '@mui/material/CssBaseline'
 import Upload from './routes/Upload'
+import VideosStats from './routes/VideosStats'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(
@@ -32,6 +33,12 @@ function App() {
             </Route>
             <Route path="/dashboard/upload" element={<ProtectedRoute />}>
               <Route path="/dashboard/upload" element={<Upload></Upload>} />
+            </Route>
+            <Route path="/dashboard/videos" element={<ProtectedRoute />}>
+              <Route
+                path="/dashboard/videos"
+                element={<VideosStats></VideosStats>}
+              />
             </Route>
           </Routes>
         </AuthContext.Provider>
